@@ -20,8 +20,6 @@ function request(url, urlParams) {
         queryURL = `${url}?${convertParams(urlParams)}`;
     }
 
-    console.log('queryURL', queryURL);
-
     return fetch(queryURL, {
         method: 'GET',
         headers: {
