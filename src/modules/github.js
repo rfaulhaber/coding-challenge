@@ -1,10 +1,27 @@
-export function getRailsIssues(queryLabels) {
-    return request('https://api.github.com/repos/rails/rails/issues', { labels: queryLabels });
+export function getRailsIssues(queryLabels, page) {
+    const params = {};
+
+    if (queryLabels) {
+        params.labels = queryLabels;
+    }
+
+    params.page = page || 1;
+    params.per_page = 100;
+
+    return request('https://api.github.com/repos/rails/rails/issues', params);
 }
 
 function request(url, urlParams) {
-    const queryURL = `${url}?${convertParams(urlParams)}`;
-    console.log('queryUrl', queryURL);
+    let queryURL;
+
+    if (!urlParams) {
+        queryURL = url;
+    } else {
+        queryURL = `${url}?${convertParams(urlParams)}`;
+    }
+
+    console.log('queryURL', queryURL);
+
     return fetch(queryURL, {
         method: 'GET',
         headers: {
@@ -17,9 +34,9 @@ function convertParams(params) {
     return Object.keys(params).reduce((paramStr, paramKey) => {
         const val = params[paramKey];
         if (Array.isArray(paramKey)) {
-            return paramStr.concat(`${paramKey}=${val.join(',')}`);
+            return paramStr.concat(`${paramKey}=${val.join(',')}&`);
         } else {
-            return paramStr.concat(`${paramKey}=${val}`);
+            return paramStr.concat(`${paramKey}=${val}&`);
         }
     }, '');
 }

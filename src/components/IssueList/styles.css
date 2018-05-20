@@ -1,0 +1,19 @@
+.issues-list {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.issues-column {
+    grid-column: 1;
+}
+
+.issues-control {
+    grid-column: 2;
+}
+
+.issues-control-panel {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
