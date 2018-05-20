@@ -8,10 +8,11 @@ export const ADD_LABEL_FILTER = 'ADD_LABEL_FILTER';
 export const REMOVE_LABEL_FILTER = 'REMOVE_LABEL_FILTER';
 
 export function getIssues(issueLabels) {
-    return dispatch => {
+    return (dispatch, getState, github) => {
         dispatch(getIssuesStart());
 
-        return getRailsIssues()
+        return github
+            .getRailsIssues()
             .then(issues => dispatch(getIssuesSuccess(issues)))
             .catch(error => dispatch(getIssuesFailure(error)));
     };
