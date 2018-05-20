@@ -17,6 +17,20 @@ export function getIssues(issueLabels) {
     };
 }
 
+export function addLabelFilter(label) {
+    return {
+        type: ADD_LABEL_FILTER,
+        label
+    };
+}
+
+export function removeLabelFilter(label) {
+    return {
+        type: REMOVE_LABEL_FILTER,
+        label
+    };
+}
+
 function getIssuesStart() {
     return {
         type: GET_ISSUES_START
@@ -34,19 +48,5 @@ function getIssuesFailure(error) {
     return {
         type: GET_ISSUES_FAILURE,
         error
-    };
-}
-
-function addLabelFilter(label) {
-    return {
-        type: ADD_LABEL_FILTER,
-        label
-    };
-}
-
-function removeLabelFilter(label) {
-    return {
-        type: REMOVE_LABEL_FILTER,
-        label
     };
 }

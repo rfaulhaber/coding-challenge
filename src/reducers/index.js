@@ -1,4 +1,4 @@
-import { remove, uniq } from 'lodash-es';
+import { without, uniq } from 'lodash-es';
 import {
     GET_ISSUES_START,
     GET_ISSUES_SUCCESS,
@@ -8,22 +8,11 @@ import {
 } from '../actions/index';
 
 const initialState = {
-    labelFilters: [
-        'actioncable',
-        'actionmailer',
-        'actionpack',
-        'actionview',
-        'activejob',
-        'activemodel',
-        'activerecord',
-        'activestorage',
-        'activesupport',
-        'asset pipeline'
-    ]
+    issues: [],
+    labelFilters: []
 };
 
 export default function App(state = initialState, action) {
-    console.log('action', action.type);
     switch (action.type) {
         case ADD_LABEL_FILTER:
             return Object.assign({}, state, {
@@ -31,7 +20,7 @@ export default function App(state = initialState, action) {
             });
         case REMOVE_LABEL_FILTER:
             return Object.assign({}, state, {
-                labelFilters: remove(state.labelFilters, label => label === action.label)
+                labelFilters: without(state.labelFilters, action.label)
             });
         case GET_ISSUES_SUCCESS:
             return Object.assign({}, state, {

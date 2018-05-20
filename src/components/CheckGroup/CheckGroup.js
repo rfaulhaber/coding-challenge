@@ -11,10 +11,10 @@ export default class CheckGroup extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    onChange(event) {
-        console.log('on change', event.target.checked);
+    onChange(event, label) {
+        const { checked } = event.target;
         if (this.props.onChange) {
-            this.props.onChange();
+            this.props.onChange(label, checked);
         }
     }
 
@@ -24,7 +24,11 @@ export default class CheckGroup extends Component {
                 {this.props.labels.map((label, index) => (
                     <div key={index}>
                         <label htmlFor={'input' + index}>
-                            <input type="checkbox" id={'input' + index} onChange={this.onChange} />
+                            <input
+                                type="checkbox"
+                                id={'input' + index}
+                                onChange={event => this.onChange(event, label)}
+                            />
                             {label}
                         </label>
                     </div>

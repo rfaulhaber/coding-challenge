@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addLabelFilter, removeLabelFilter } from '../../actions/index';
 import IssueTitleView from '../IssueTitleView/IssueTitleView';
 import CheckGroup from '../CheckGroup/CheckGroup';
 import './styles.css';
@@ -17,6 +19,20 @@ const filterLabels = [
 ];
 
 class IssueList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onCheck = this.onCheck.bind(this);
+    }
+
+    onCheck(label, checked) {
+        if (checked) {
+            this.props.addLabelFilter(label);
+        } else {
+            this.props.removeLabelFilter(label);
+        }
+    }
+
     render() {
         let body;
 
@@ -28,13 +44,10 @@ class IssueList extends Component {
 
         return (
             <div className="issues-list">
-                <div className="issues-column">
-                    {body}
-                    <button>Load more issues</button>
-                </div>
+                <div className="issues-column">{body}</div>
                 <div className="issues-control">
                     <div className="issues-control-panel">
-                        <CheckGroup labels={filterLabels} />
+                        <CheckGroup labels={filterLabels} onChange={this.onCheck} />
                     </div>
                 </div>
             </div>
@@ -42,4 +55,11 @@ class IssueList extends Component {
     }
 }
 
-export default IssueList;
+const mapDispatchToProps = dispatch => {
+    return {
+        addLabelFilter: label => dispatch(addLabelFilter(label)),
+        removeLabelFilter: label => dispatch(removeLabelFilter(label))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(IssueList);
