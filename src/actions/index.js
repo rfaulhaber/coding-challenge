@@ -11,7 +11,7 @@ export function getIssues(issueLabels) {
     return dispatch => {
         dispatch(getIssuesStart());
 
-        return getRailsIssues(issueLabels)
+        return getRailsIssues()
             .then(issues => dispatch(getIssuesSuccess(issues)))
             .catch(error => dispatch(getIssuesFailure(error)));
     };
